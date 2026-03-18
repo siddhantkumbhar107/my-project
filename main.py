@@ -52,5 +52,4 @@ def get_object_count(file):
     except Exception as e:
         return f"Error: {e}"
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
-main()
+   main()
