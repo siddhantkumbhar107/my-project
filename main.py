@@ -9,7 +9,10 @@ from report_generator import generate_report
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
-
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    result = analyze_pdf_logic()
+    return render_template("result.html", data=result)
 @app.route('/')
 def home():
     return render_template("index.html")   
