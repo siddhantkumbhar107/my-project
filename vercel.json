@@ -4,3 +4,10 @@
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
+{
+  "functions": {
+    "api/analyze.py": {
+      "runtime": "python3.9"
+    }
+  }
+}
