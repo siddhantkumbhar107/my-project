@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "PDF Malware Analyzer is running 🚀"
+    return "index.html"
 
 
 @app.route('/analyze', methods=['POST'])
