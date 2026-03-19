@@ -7,12 +7,22 @@ from metadata import extract_metadata
 from ioc_extractor import extract_iocs
 from report_generator import generate_report
 from flask import Flask, request, render_template
-
+from flask import jsonify, request
 app = Flask(__name__)
 @app.route('/analyze', methods=['POST'])
 def analyze():
     result = analyze_pdf_logic()
     return render_template("result.html", data=result)
+@app.route('/api/analyze', methods=['POST'])
+def api_analyze():
+    file = request.files['file']
+    
+    filepath = "temp.pdf"
+    file.save(filepath)
+
+    result = analyze_pdf_logic(filepath)
+
+    return jsonify(result)
 @app.route('/')
 def home():
     return render_template("index.html")   
