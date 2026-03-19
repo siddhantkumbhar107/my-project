@@ -1,6 +1,17 @@
 import re
 from PyPDF2 import PdfReader
 
+def get_count(data):
+    return len(data)
+
+def calculate_risk(keywords, urls):
+    if keywords or urls:
+        return "High Risk ⚠"
+    return "Low Risk ✅"
+
+def extract_iocs(text):
+    import re
+    return re.findall(r'https?://\S+', text)
 def analyze_pdf(filepath):
     result = {}
 
