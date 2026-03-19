@@ -2,7 +2,7 @@ keywords = ["/JS", "/JavaScript", "/AA", "/OpenAction", "/AcroForm", "/RichMedia
 from flask import Flask, request, render_template
 import os
 import sys
-from analyzer import analyze_pdf,get_object_count,calculate_risk,extract_iocs
+from analyzer import analyze_pdf_logic,get_object_count,calculate_risk,extract_iocs
 from metadata import extract_metadata
 from ioc_extractor import extract_iocs
 from report_generator import generate_report
@@ -37,7 +37,7 @@ def analyze():
     filepath = "temp.pdf"
     file.save(filepath)
 
-    result = analyze_pdf(filepath)
+    result = analyze_pdf_logic(filepath)
 
     return render_template("result.html", data=result)
     return "Use form to upload PDF"
@@ -57,7 +57,7 @@ def main():
     ips = extract_iocs(raw_content)
     generate_report(file, metadata, analysis, iocs, obj_count, risk_level, risk_reasons)
 
-def analyze_pdf(file):
+def analyze_pdf_logic(file):
     # Check if 'file' is a string (a path on your computer)
     if isinstance(file, str):
         with open(file, 'rb') as f:
