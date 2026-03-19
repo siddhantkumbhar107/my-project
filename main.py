@@ -2,7 +2,7 @@ keywords = ["/JS", "/JavaScript", "/AA", "/OpenAction", "/AcroForm", "/RichMedia
 from flask import Flask, request, render_template
 import os
 import sys
-from analyzer import analyze_pdf,get_object_count,calculate_risk,extract_iocs
+from analyzer import analyze_pdf
 from metadata import extract_metadata
 from ioc_extractor import extract_iocs
 from report_generator import generate_report
@@ -20,7 +20,7 @@ def api_analyze():
     filepath = "temp.pdf"
     file.save(filepath)
 
-    result = analyze_pdf_logic(filepath)
+    result = analyze_pdf(filepath)
 
     return jsonify(result)
 @app.route('/')
