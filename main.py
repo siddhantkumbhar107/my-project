@@ -12,12 +12,21 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template("index.html")   # homepage
+    return render_template("index.html")   
 
-@app.route('/analyze', methods=['GET', 'POST'])
+@app.route('/analyze', methods=['POST'])
 def analyze():
-    if request.method == 'POST':
-        return "Analysis Done ✅"
+    file = request.files.get('file')
+
+    if not file:
+        return "No file uploaded ❌"
+
+    filepath = "temp.pdf"
+    file.save(filepath)
+
+    result = analyze_pdf(filepath)
+
+    return render_template("result.html", data=result)
     return "Use form to upload PDF"
 
 if __name__ == "__main__":
