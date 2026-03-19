@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>PDF Malware Analyzer</title>
+</head>
 <body>
 
-<h2>PDF Malware Analyzer</h2>
+<h2>Upload PDF File</h2>
 
 <form action="/analyze" method="POST" enctype="multipart/form-data">
     <input type="file" name="file" required>
+    <br><br>
     <button type="submit">Analyze</button>
 </form>
 
