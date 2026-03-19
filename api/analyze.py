@@ -13,7 +13,7 @@ def handler(request):
     # ✅ THIS IS WHERE YOU ADD IT
     if request.method == "POST":
 
-        file = request.files.get("file")   # 👈 ADD HERE
+        file = request.files.get("file")   
 
         if not file:
             return {
