@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/analyze.py" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
