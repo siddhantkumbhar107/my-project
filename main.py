@@ -1,7 +1,7 @@
 6from flask import Flask, request, render_template, jsonify
 from analyzer import analyze_pdf
 import os
-
+from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
