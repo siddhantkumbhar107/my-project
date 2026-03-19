@@ -12,6 +12,7 @@ def calculate_risk(keywords, urls):
 def extract_iocs(text):
     import re
     return re.findall(r'https?://\S+', text)
+    
 def analyze_pdf(filepath):
     result = {}
 
