@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>PDF Malware Analysis Result</h2>
+
+<p><b>📄 Target File:</b> {{ data.file_name }}</p>
+
+<p><b>📊 Metadata:</b> {{ data.metadata }}</p>
+
+<p><b>⚠ Suspicious Keywords:</b></p>
+<ul>
+{% for k in data.keywords %}
+<li>{{ k }}</li>
+{% endfor %}
+</ul>
+
+<p><b>🌐 Network Indicators (URLs):</b></p>
+<ul>
+{% for url in data.urls %}
+<li>{{ url }}</li>
+{% endfor %}
+</ul>
+
+<p><b>🚨 Risk Assessment:</b> {{ data.risk }}</p>
+
+<p><b>🛡 Mitigation:</b> {{ data.solution }}</p>
+
+<br>
+<a href="/">⬅ Go Back</a>
+
+</body>
+</html>
