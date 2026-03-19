@@ -1,56 +1,46 @@
 import re
 from PyPDF2 import PdfReader
 
-def get_object_count(data):
-    return len(data)
-
-def calculate_risk(keywords, urls):
-    if keywords or urls:
-        return "High Risk ⚠"
-    return "Low Risk ✅"
-
-def extract_iocs(text):
-    import re
-    return re.findall(r'https?://\S+', text)
-    
-def analyze_pdf(filepath):
-    result = {}
-
-    
-    result["file_name"] = filepath
-
-    
-    try:
-        reader = PdfReader(filepath)
-        meta = reader.metadata
-        result["metadata"] = str(meta)
-    except:
-        result["metadata"] = "Could not extract metadata"
-
-    
+def analyze_pdf_logic(filepath):
+    reader = PdfReader(filepath)
     text = ""
-    try:
-        for page in reader.pages:
+
+    # 📄 Extract text from PDF
+    for page in reader.pages:
+        try:
             text += page.extract_text() or ""
-    except:
-        pass
+        except:
+            pass
 
-    
-    keywords = ["JavaScript", "/JS", "/OpenAction", "/AA", "/URI"]
-    found_keywords = [k for k in keywords if k.lower() in text.lower()]
-    result["keywords"] = found_keywords if found_keywords else ["None"]
+    # 🔍 Suspicious keywords
+    keywords_list = [
+        "/JavaScript", "/JS", "/OpenAction", "/Launch",
+        "/EmbeddedFile", "/URI", "/SubmitForm"
+    ]
 
-    
+    found_keywords = [kw for kw in keywords_list if kw in text]
+
+    # 🌐 Extract URLs
     urls = re.findall(r'https?://\S+', text)
-    result["urls"] = urls if urls else ["None"]
 
-    
-    if found_keywords or urls:
-        result["risk"] = "High Risk ⚠"
+    # 🚨 Risk calculation
+    if len(found_keywords) > 2 or len(urls) > 2:
+        risk = "High Risk ⚠"
+        mitigation = "Do NOT open this file. Scan with antivirus."
+    elif found_keywords or urls:
+        risk = "Medium Risk ⚠"
+        mitigation = "Open carefully in sandbox environment."
     else:
-        result["risk"] = "Low Risk ✅"
+        risk = "Low Risk ✅"
+        mitigation = "File appears safe."
 
-    
-    result["solution"] = "Do not open suspicious PDFs. Use antivirus and sandbox tools."
-
-    return result
+    # 📊 Final result
+    return {
+        "file": filepath,
+        "keyword_count": len(found_keywords),
+        "keywords": found_keywords,
+        "url_count": len(urls),
+        "urls": urls,
+        "risk": risk,
+        "mitigation": mitigation
+    }
