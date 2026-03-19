@@ -55,5 +55,5 @@ def analyze_pdf(filepath):
 
     result["risk"] = risk
     result["mitigation"] = mitigation
-
+   
     return result
