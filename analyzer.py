@@ -1,7 +1,7 @@
 import re
 from PyPDF2 import PdfReader
 
-def get_count(data):
+def get_object_count(data):
     return len(data)
 
 def calculate_risk(keywords, urls):
