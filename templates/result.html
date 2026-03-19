@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>PDF Malware Analysis Result</title>
+</head>
 <body>
 
-<h2>PDF Malware Analysis Result</h2>
+<h2>📄 PDF MALWARE ANALYSIS REPORT</h2>
+<hr>
 
-<p><b>📄 Target File:</b> {{ data.file_name }}</p>
+<p><b>📁 Target File:</b> {{ result.file_name }}</p>
 
-<p><b>📊 Metadata:</b> {{ data.metadata }}</p>
-  
-<p><b>Keyword Count:</b> {{ data.keyword_count }}</p>
-  
-<p><b>URL Count:</b> {{ data.url_count }}</p>
+<p><b>📊 Metadata Information:</b></p>
+<pre>{{ result.metadata }}</pre>
 
-<p><b>⚠ Suspicious Keywords:</b></p>
-<ul>
-{% for k in data.keywords %}
-<li>{{ k }}</li>
-{% endfor %}
-</ul>
+<p><b>🔍 Suspicious Keywords Found:</b></p>
+{% if result.keywords %}
+    <ul>
+        {% for k in result.keywords %}
+            <li>{{ k }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>None found.</p>
+{% endif %}
 
 <p><b>🌐 Network Indicators (URLs):</b></p>
-<ul>
-{% for url in data.urls %}
-<li>{{ url }}</li>
-{% endfor %}
-</ul>
+{% if result.urls %}
+    <ul>
+        {% for url in result.urls %}
+            <li>{{ url }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>None found.</p>
+{% endif %}
 
-<p><b>🚨 Risk Assessment:</b> {{ data.risk }}</p>
+<hr>
 
-<p><b>🛡 Mitigation:</b> {{ data.solution }}</p>
+<h3>🚨 FINAL RISK ASSESSMENT</h3>
+<p><b>{{ result.risk }}</b></p>
+
+<h3>🛡️ MITIGATION STRATEGY</h3>
+<p><b>ACTION:</b> {{ result.mitigation }}</p>
 
 <br>
 <a href="/">⬅ Go Back</a>
