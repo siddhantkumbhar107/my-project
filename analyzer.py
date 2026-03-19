@@ -1,7 +1,7 @@
 import re
 from PyPDF2 import PdfReader
 
-
+def handler(request):
 def analyze_pdf(filepath):
     result = {}
 
