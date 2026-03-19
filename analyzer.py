@@ -1,55 +1,44 @@
 import re
-keywords = [
-"/JavaScript",
-"/JS",
-"/OpenAction",
-"/Launch",
-"/EmbeddedFile"
-]
+from PyPDF2 import PdfReader
 
-def analyze_pdf(file):
-    # Check if 'file' is a string (a path) or a file object (from Postman)
-    if isinstance(file, str):
-        with open(file, 'rb') as f:
-            content = f.read().decode(errors="ignore")
-    else:
-        content = file.read().decode(errors="ignore")
-        file.seek(0)
+def analyze_pdf(filepath):
+    result = {}
+
     
-    suspicious = [key for key in keywords if key in content]
-    return suspicious
+    result["file_name"] = filepath
 
-def get_object_count(file):
+    
     try:
-        if isinstance(file, str):
-            with open(file, 'rb') as f:
-                content = f.read()
-        else:
-            content = file.read()
-            file.seek(0)
-        
-        count = content.count(b' obj')
-        return count
-    except Exception as e:
-        return f"Error: {e}"
-def calculate_risk(metadata, analysis, obj_count):
-    risk_reasons = []
+        reader = PdfReader(filepath)
+        meta = reader.metadata
+        result["metadata"] = str(meta)
+    except:
+        result["metadata"] = "Could not extract metadata"
+
     
-    # Check if obj_count is a number before comparing
-    if isinstance(obj_count, int):
-        if obj_count > 50:
-            risk_reasons.append(f"High object count: {obj_count}")
+    text = ""
+    try:
+        for page in reader.pages:
+            text += page.extract_text() or ""
+    except:
+        pass
+
+    
+    keywords = ["JavaScript", "/JS", "/OpenAction", "/AA", "/URI"]
+    found_keywords = [k for k in keywords if k.lower() in text.lower()]
+    result["keywords"] = found_keywords if found_keywords else ["None"]
+
+    
+    urls = re.findall(r'https?://\S+', text)
+    result["urls"] = urls if urls else ["None"]
+
+    
+    if found_keywords or urls:
+        result["risk"] = "High Risk ⚠"
     else:
-        # If it's an error string, we treat it as 0 or handle it
-        obj_count = 0 
+        result["risk"] = "Low Risk ✅"
 
-    if analysis:
-        risk_reasons.append(f"Suspicious keywords found: {', '.join(analysis)}")
+    
+    result["solution"] = "Do not open suspicious PDFs. Use antivirus and sandbox tools."
 
-    risk_level = "High" if risk_reasons else "Low"
-    return risk_level, risk_reasons
-def extract_iocs(some_argument):
-    # Your extraction logic goes here
-    results = []
-    # e.g., search for IPs, URLs, etc.
-    return results
+    return result
