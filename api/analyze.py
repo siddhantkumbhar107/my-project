@@ -1,5 +1,7 @@
-def handler(request):
-    return {
-        "statusCode": 200,
-        "body": "API is working"
+{
+  "functions": {
+    "api/analyze.py": {
+      "runtime": "python3.9"
     }
+  }
+}
