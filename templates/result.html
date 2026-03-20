@@ -38,8 +38,11 @@
 
 <div class="section">
     <span class="label">[i] Metadata Information:</span><br>
+
     {% if result.metadata %}
-        {{ result.metadata }}
+        {% for key, value in result.metadata.items() %}
+            - {{ key }}: {{ value }}<br>
+        {% endfor %}
     {% else %}
         None found.
     {% endif %}
