@@ -25,22 +25,14 @@ def analyze_pdf(filepath):
     # Extract URLs
     urls = re.findall(r'https?://\S+', text)
 
-    # Risk calculation
-    if len(found_keywords) > 2 or len(urls) > 2:
-        risk = "High Risk"
-        mitigation = "Do NOT open this file."
-    elif found_keywords or urls:
-        risk = "Medium Risk"
-        mitigation = "Open carefully."
-    else:
-        risk = "Low Risk"
-        mitigation = "Safe to open."
+   result["file_name"] = filepath
+        result["metadata"] = str(reader.metadata)
+        result["keywords"] = found_keywords
+        result["urls"] = urls
+        result["risk"] = "Low Risk"
+        result["mitigation"] = "Safe to open"
 
-    result["file_name"] = filepath
-    result["metadata"] = str(reader.metadata)
-    result["keywords"] = found_keywords
-    result["urls"] = urls
-    result["risk"] = risk
-    result["mitigation"] = mitigation
+        return result
 
-    return result
+    except Exception as e:
+        return {"error": str(e)}
