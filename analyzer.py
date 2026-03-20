@@ -54,7 +54,7 @@ def handler(request):
 
     result["risk"] = risk
     result["mitigation"] = mitigation
-   return {
+   
  def analyze_pdf(filepath):
      result = {}
 
