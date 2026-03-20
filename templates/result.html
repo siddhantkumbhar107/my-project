@@ -1,93 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PDF Analysis Report</title>
+    <title>PDF Analysis Result</title>
     <style>
         body {
-            background-color: #0d1117;
-            color: #e6edf3;
-            font-family: monospace;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 0;
         }
-        .box {
-            border: 1px solid #30363d;
-            padding: 20px;
-            border-radius: 10px;
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
         }
-        h2 {
-            color: #58a6ff;
+
+        h1 {
+            text-align: center;
+            color: #38bdf8;
         }
+
         .section {
-            margin-top: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #334155;
+            border-radius: 8px;
         }
-        .label {
-            color: #79c0ff;
+
+        .title {
+            font-weight: bold;
+            color: #22c55e;
+        }
+
+        .risk {
+            font-size: 20px;
+            font-weight: bold;
+            color: #facc15;
+        }
+
+        ul {
+            margin: 5px 0 0 20px;
+        }
+
+        .btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 10px 20px;
+            background: #38bdf8;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #0ea5e9;
         }
     </style>
 </head>
+
 <body>
 
-<div class="box">
+<div class="container">
+    <h1>📄 PDF Malware Analysis Report</h1>
 
-<h2>📄 PDF MALWARE ANALYSIS REPORT</h2>
-<hr>
+    <div class="section">
+        <div class="title">📂 File Name:</div>
+        <p>{{ result.file_name }}</p>
+    </div>
 
-<div class="section">
-    <span class="label">[+] Target File:</span> {{ result.file_name }}
-</div>
+    <div class="section">
+        <div class="title">📊 Metadata:</div>
+        {% if result.metadata %}
+            <ul>
+                {% for key, value in result.metadata.items() %}
+                    <li><b>{{ key }}</b>: {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No metadata found</p>
+        {% endif %}
+    </div>
 
-<div class="section">
-    <span class="label">[i] Metadata Information:</span><br>
+    <div class="section">
+        <div class="title">⚠️ Suspicious Keywords:</div>
+        {% if result.keywords %}
+            <ul>
+                {% for kw in result.keywords %}
+                    <li>{{ kw }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>None found</p>
+        {% endif %}
+    </div>
 
-    {% if result.metadata %}
-        {% for key, value in result.metadata.items() %}
-            - {{ key }}: {{ value }}<br>
-        {% endfor %}
-    {% else %}
-        None found.
-    {% endif %}
-</div>
+    <div class="section">
+        <div class="title">🌐 URLs Found:</div>
+        {% if result.urls %}
+            <ul>
+                {% for url in result.urls %}
+                    <li>{{ url }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>None found</p>
+        {% endif %}
+    </div>
 
-<div class="section">
-    <span class="label">[!] Suspicious Keywords Found:</span><br>
-    {% if result.keywords %}
-        {% for kw in result.keywords %}
-            - {{ kw }}<br>
-        {% endfor %}
-    {% else %}
-        None found.
-    {% endif %}
-</div>
+    <div class="section">
+        <div class="title">🚨 Risk Level:</div>
+        <p class="risk">{{ result.risk }}</p>
+    </div>
 
-<div class="section">
-    <span class="label">[!] Network Indicators (URLs):</span><br>
-    {% if result.urls %}
-        {% for url in result.urls %}
-            - {{ url }}<br>
-        {% endfor %}
-    {% else %}
-        None found.
-    {% endif %}
-</div>
+    <div class="section">
+        <div class="title">🛡️ Mitigation:</div>
+        <p>{{ result.mitigation }}</p>
+    </div>
 
-<hr>
-
-<div class="section">
-    <span class="label">FINAL RISK ASSESSMENT:</span> {{ result.risk }}
-</div>
-
-<div class="section">
-    <span class="label">--- MITIGATION STRATEGY ---</span><br>
-
-    {% if result.risk == "High Risk" %}
-        ACTION: Do not open this file. Quarantine immediately.
-    {% elif result.risk == "Medium Risk" %}
-        ACTION: Proceed with caution. Inspect URLs.
-    {% else %}
-        ACTION: File appears safe for normal use.
-    {% endif %}
-</div>
-
+    <a href="/" class="btn">🔙 Analyze Another File</a>
 </div>
 
 </body>
