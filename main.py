@@ -15,10 +15,22 @@ def analyze():
     if not file:
         return "No file uploaded"
 
+  @app.route('/analyze', methods=['POST'])
+def analyze():
+    file = request.files.get('file')
+
+    if not file:
+        return "No file uploaded"
+
+    # ✅ ADD HERE
+    filename = file.filename
     filepath = "temp.pdf"
     file.save(filepath)
 
     result = analyze_pdf(filepath)
+
+    # ✅ ADD THIS
+    result["file_name"] = filename
 
     return render_template("result.html", result=result)
 
