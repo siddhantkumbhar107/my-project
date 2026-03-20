@@ -23,7 +23,15 @@ def analyze_pdf(filepath):
         urls = re.findall(r'https?://\S+', text)
 
         result["file_name"] = filepath
-        result["metadata"] = str(reader.metadata)
+        metadata_clean = {}
+
+if reader.metadata:
+    for key, value in reader.metadata.items():
+        clean_key = key.replace("/", "")
+        metadata_clean[clean_key] = str(value)
+
+        result["metadata"] = metadata_clean
+
         result["keywords"] = found_keywords
         result["urls"] = urls
         result["risk"] = "Low Risk"
