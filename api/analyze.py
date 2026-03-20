@@ -1,5 +1,13 @@
+import json
+
 def handler(request):
-    return {
-        "statusCode": 200,
-        "body": "WORKING"
-    }
+    try:
+        return {
+            "statusCode": 200,
+            "body": "API WORKING ✅"
+        }
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "body": str(e)
+        }
