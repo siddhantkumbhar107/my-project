@@ -35,16 +35,18 @@ def analyze():
     return render_template("result.html", result=result)
 
 @app.route('/api/analyze', methods=['POST'])
-def api_analyze():
+def api_analyze(): 
     file = request.files.get('file')
 
     if not file:
         return jsonify({"error": "No file uploaded"})
 
+    filename = file.filename
     filepath = "temp.pdf"
     file.save(filepath)
 
     result = analyze_pdf(filepath)
+    result["file_name"] = filename
 
     return jsonify(result)
 
