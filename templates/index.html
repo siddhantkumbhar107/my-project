@@ -2,53 +2,15 @@
 <html>
 <head>
     <title>PDF Malware Analyzer</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        .box { border: 1px solid #ccc; padding: 15px; margin-top: 20px; }
-        .title { font-weight: bold; margin-top: 10px; }
-    </style>
 </head>
-
 <body>
 
-<h2>📄 PDF Malware Analyzer</h2>
+    <h1>PDF Malware Analyzer 🚀</h1>
 
-<input type="file" id="fileInput">
-<button onclick="upload()">Analyze</button>
-
-<div id="result" class="box" style="display:none;"></div>
-
-<script>
-async function upload() {
-    const file = document.getElementById("fileInput").files[0];
-
-    const arrayBuffer = await file.arrayBuffer();
-
-    const res = await fetch("/api/analyze", {
-        method: "POST",
-        body: arrayBuffer
-    });
-
-    const data = await res.json();
-
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").innerHTML = `
-        <div class="title">Target File:</div> ${data.file_name}
-
-        <div class="title">Metadata Information:</div> ${data.metadata}
-
-        <div class="title">Suspicious Keywords Found:</div>
-        ${data.keywords.length ? data.keywords.join(", ") : "None"}
-
-        <div class="title">Network Indicators (URLs):</div>
-        ${data.urls.length ? data.urls.join(", ") : "None"}
-
-        <div class="title">FINAL RISK ASSESSMENT:</div> ${data.risk}
-
-        <div class="title">MITIGATION STRATEGY:</div> ${data.mitigation}
-    `;
-}
-</script>
+    <form action="/analyze" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Analyze</button>
+    </form>
 
 </body>
 </html>
