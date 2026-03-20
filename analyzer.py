@@ -63,11 +63,16 @@ def analyze_pdf(filepath):
     result["risk"] = risk
     result["mitigation"] = mitigation
    return {
-    "file_name": filepath,
-    "metadata": "Some metadata",
-    "keywords": [],
-    "urls": [],
-    "risk": "Low Risk",
-    "mitigation": "No action needed"
+ def analyze_pdf(filepath):
+    result = {}
+
+    result["file_name"] = filepath
+    result["metadata"] = "Sample metadata"
+    result["keywords"] = []
+    result["urls"] = []
+    result["risk"] = "Low Risk"
+    result["mitigation"] = "Safe to open"
+
+    return result
 }
     return result
