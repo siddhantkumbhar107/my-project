@@ -33,6 +33,3 @@ def analyze_pdf(filepath):
         result["mitigation"] = "Safe to open"
 
         return result
-
-    except Exception as e:
-        return {"error": str(e)}
