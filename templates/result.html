@@ -1,50 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PDF Malware Analysis Result</title>
+    <title>Result</title>
 </head>
 <body>
 
-<h2>📄 PDF MALWARE ANALYSIS REPORT</h2>
-<hr>
+    <h2>Analysis Result</h2>
 
-<p><b>📁 Target File:</b> {{ result.file_name }}</p>
-
-<p><b>📊 Metadata Information:</b></p>
-<pre>{{ result.metadata }}</pre>
-
-<p><b>🔍 Suspicious Keywords Found:</b></p>
-{% if result.keywords %}
-    <ul>
-        {% for k in result.keywords %}
-            <li>{{ k }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>None found.</p>
-{% endif %}
-
-<p><b>🌐 Network Indicators (URLs):</b></p>
-{% if result.urls %}
-    <ul>
-        {% for url in result.urls %}
-            <li>{{ url }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>None found.</p>
-{% endif %}
-
-<hr>
-
-<h3>🚨 FINAL RISK ASSESSMENT</h3>
-<p><b>{{ result.risk }}</b></p>
-
-<h3>🛡️ MITIGATION STRATEGY</h3>
-<p><b>ACTION:</b> {{ result.mitigation }}</p>
-
-<br>
-<a href="/">⬅ Go Back</a>
+    <p><b>Target File:</b> {{ result.file_name }}</p>
+    <p><b>Metadata:</b> {{ result.metadata }}</p>
+    <p><b>Keywords:</b> {{ result.keywords }}</p>
+    <p><b>URLs:</b> {{ result.urls }}</p>
+    <p><b>Risk:</b> {{ result.risk }}</p>
+    <p><b>Mitigation:</b> {{ result.mitigation }}</p>
 
 </body>
 </html>
