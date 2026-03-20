@@ -15,8 +15,8 @@ def handler(request):
 
         file = request.files.get("file")   
 
-        if not file:
-            return {
+     if not file:
+         return {
                 "statusCode": 400,
                 "body": "No file uploaded"
             }
@@ -36,7 +36,7 @@ def handler(request):
             "headers": {"Content-Type": "application/json"},
             "body": json.dumps(result)
 }
-    return {
+       return {
         "statusCode": 405,
         "body": "Method Not Allowed"
     }
