@@ -30,6 +30,9 @@
             padding: 15px;
             background: #334155;
             border-radius: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
         }
 
         .title {
@@ -81,7 +84,10 @@
         {% if result.metadata %}
             <ul>
                 {% for key, value in result.metadata.items() %}
-                    <li><b>{{ key }}</b>: {{ value }}</li>
+                    <li>
+                        <b>{{ key }}</b>:
+                        <pre style="white-space: pre-wrap; word-break: break-all;">{{ value }}</pre>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
