@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, render_template, jsonify
-from analyze import analyze_pdf
+from analyzer import analyze_pdf
 from flask import Flask
 app = Flask(__name__)
 
