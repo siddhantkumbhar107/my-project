@@ -2,11 +2,6 @@ import re
 from PyPDF2 import PdfReader
 import json
 from analyzer import analyze_pdf
-
-def handler(request):
-    return {
-        "statusCode": 200,
-        "body": "IMPORT OK"
     }
 def handler(request):
 def analyze_pdf(filepath):
@@ -64,7 +59,7 @@ def analyze_pdf(filepath):
     result["mitigation"] = mitigation
    return {
  def analyze_pdf(filepath):
-    result = {}
+     result = {}
 
     result["file_name"] = filepath
     result["metadata"] = "Sample metadata"
@@ -73,6 +68,6 @@ def analyze_pdf(filepath):
     result["risk"] = "Low Risk"
     result["mitigation"] = "Safe to open"
 
-    return result
+    
 }
     return result
