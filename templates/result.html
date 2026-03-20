@@ -1,18 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Result</title>
+    <title>PDF Analysis Report</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #e6edf3;
+            font-family: monospace;
+            padding: 20px;
+        }
+        .box {
+            border: 1px solid #30363d;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #58a6ff;
+        }
+        .section {
+            margin-top: 15px;
+        }
+        .label {
+            color: #79c0ff;
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Analysis Result</h2>
+<div class="box">
 
-    <p><b>Target File:</b> {{ result.file_name }}</p>
-    <p><b>Metadata:</b> {{ result.metadata }}</p>
-    <p><b>Keywords:</b> {{ result.keywords }}</p>
-    <p><b>URLs:</b> {{ result.urls }}</p>
-    <p><b>Risk:</b> {{ result.risk }}</p>
-    <p><b>Mitigation:</b> {{ result.mitigation }}</p>
+<h2>📄 PDF MALWARE ANALYSIS REPORT</h2>
+<hr>
+
+<div class="section">
+    <span class="label">[+] Target File:</span> {{ result.file_name }}
+</div>
+
+<div class="section">
+    <span class="label">[i] Metadata Information:</span><br>
+    {% if result.metadata %}
+        {{ result.metadata }}
+    {% else %}
+        None found.
+    {% endif %}
+</div>
+
+<div class="section">
+    <span class="label">[!] Suspicious Keywords Found:</span><br>
+    {% if result.keywords %}
+        {% for kw in result.keywords %}
+            - {{ kw }}<br>
+        {% endfor %}
+    {% else %}
+        None found.
+    {% endif %}
+</div>
+
+<div class="section">
+    <span class="label">[!] Network Indicators (URLs):</span><br>
+    {% if result.urls %}
+        {% for url in result.urls %}
+            - {{ url }}<br>
+        {% endfor %}
+    {% else %}
+        None found.
+    {% endif %}
+</div>
+
+<hr>
+
+<div class="section">
+    <span class="label">FINAL RISK ASSESSMENT:</span> {{ result.risk }}
+</div>
+
+<div class="section">
+    <span class="label">--- MITIGATION STRATEGY ---</span><br>
+
+    {% if result.risk == "High Risk" %}
+        ACTION: Do not open this file. Quarantine immediately.
+    {% elif result.risk == "Medium Risk" %}
+        ACTION: Proceed with caution. Inspect URLs.
+    {% else %}
+        ACTION: File appears safe for normal use.
+    {% endif %}
+</div>
+
+</div>
 
 </body>
 </html>
