@@ -31,7 +31,11 @@ def handler(request):
             "headers": {"Content-Type": "application/json"},
             "body": json.dumps(result)
         }
-
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(result)
+}
     return {
         "statusCode": 405,
         "body": "Method Not Allowed"
