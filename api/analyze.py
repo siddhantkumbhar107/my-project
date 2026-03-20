@@ -3,40 +3,46 @@ from analyzer import analyze_pdf
 
 def handler(request):
 
-    # ✅ For browser test
+    # ✅ Test in browser
     if request.method == "GET":
         return {
             "statusCode": 200,
             "body": "API is working"
         }
 
-    # ✅ THIS IS WHERE YOU ADD IT
+    # ✅ Handle POST
     if request.method == "POST":
+        try:
+            # 🔥 THIS IS THE CORRECT WAY IN VERCEL
+            body = request.body
 
-        file = request.files.get("file")   
+            if not body:
+                return {
+                    "statusCode": 400,
+                    "body": "No file received"
+                }
 
-     if not file:
-         return {
-                "statusCode": 400,
-                "body": "No file uploaded"
+            filepath = "/tmp/temp.pdf"
+
+            with open(filepath, "wb") as f:
+                f.write(body)
+
+            result = analyze_pdf(filepath)
+
+            return {
+                "statusCode": 200,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps(result)
             }
 
-        filepath = "/tmp/temp.pdf"
-        file.save(filepath)
+        except Exception as e:
+            return {
+                "statusCode": 500,
+                "body": str(e)
+            }
 
-        result = analyze_pdf(filepath)
-
-        return {
-            "statusCode": 200,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(result)
-        }
-        return {
-            "statusCode": 200,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(result)
-}
-       return {
+    return {
         "statusCode": 405,
         "body": "Method Not Allowed"
     }
+  
