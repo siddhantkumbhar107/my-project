@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(__file__))
 app = Flask(__name__)
 @app.route('/')
 def home():
-    return render_template "index.html"
+    return render_template"index.html"
 
 
 @app.route('/analyze', methods=['POST'])
