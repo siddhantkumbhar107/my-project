@@ -3,17 +3,14 @@ from analyzer import analyze_pdf
 
 def handler(request):
 
-    # ✅ Test in browser
     if request.method == "GET":
         return {
             "statusCode": 200,
             "body": "API is working"
         }
 
-    # ✅ Handle POST
     if request.method == "POST":
         try:
-            # 🔥 THIS IS THE CORRECT WAY IN VERCEL
             body = request.body
 
             if not body:
@@ -27,7 +24,15 @@ def handler(request):
             with open(filepath, "wb") as f:
                 f.write(body)
 
-            result = analyze_pdf(filepath)
+            # 🔥 DEBUG START
+            try:
+                result = analyze_pdf(filepath)
+            except Exception as e:
+                return {
+                    "statusCode": 500,
+                    "body": "Analyzer error: " + str(e)
+                }
+            # 🔥 DEBUG END
 
             return {
                 "statusCode": 200,
@@ -38,11 +43,10 @@ def handler(request):
         except Exception as e:
             return {
                 "statusCode": 500,
-                "body": str(e)
+                "body": "Main error: " + str(e)
             }
 
     return {
         "statusCode": 405,
         "body": "Method Not Allowed"
     }
-  
