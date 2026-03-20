@@ -4,10 +4,13 @@ from analyzer import analyze_pdf
 
 app = Flask(__name__)
 
+# HOME PAGE
 @app.route('/')
 def home():
     return render_template("index.html")
 
+
+# WEB FORM ANALYSIS
 @app.route('/analyze', methods=['POST'])
 def analyze():
     file = request.files.get('file')
@@ -15,27 +18,19 @@ def analyze():
     if not file:
         return "No file uploaded"
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    file = request.files.get('file')
-
-    if not file:
-        return "No file uploaded"
-
-    
     filename = file.filename
     filepath = "temp.pdf"
     file.save(filepath)
 
     result = analyze_pdf(filepath)
-
-    
     result["file_name"] = filename
 
     return render_template("result.html", result=result)
 
+
+# API ANALYSIS (JSON)
 @app.route('/api/analyze', methods=['POST'])
-def api_analyze(): 
+def api_analyze():   # ✅ IMPORTANT: DIFFERENT NAME
     file = request.files.get('file')
 
     if not file:
@@ -49,7 +44,3 @@ def api_analyze():
     result["file_name"] = filename
 
     return jsonify(result)
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
