@@ -3,8 +3,6 @@ from PyPDF2 import PdfReader
 import json
 from analyzer import analyze_pdf
 def handler(request):
-def analyze_pdf(filepath):
-    result = {}
 
     # 📄 File name
     result["file_name"] = filepath
