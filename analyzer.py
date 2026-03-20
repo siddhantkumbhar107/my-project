@@ -1,7 +1,7 @@
 import re
 from PyPDF2 import PdfReader
 import json
-from analyzer import analyze_pdf
+from analyze import analyze_pdf
 def handler(request):
 
     # 📄 File name
