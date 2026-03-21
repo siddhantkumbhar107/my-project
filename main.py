@@ -44,6 +44,3 @@ def api_analyze():   # ✅ IMPORTANT: DIFFERENT NAME
     result["file_name"] = filename
 
     return jsonify(result)
-    
-
-app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
